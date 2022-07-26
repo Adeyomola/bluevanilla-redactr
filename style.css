@@ -127,7 +127,12 @@ button {
 button:active {
     transform: translate(0.2rem, 0.1rem);
 }
-
+footer {
+  font-family: 'Nunito';
+  position: fixed;
+  bottom: 0;
+  font-size: 1.2rem;
+}
 @media (min-width:320px) and (max-width:359px) {
     summary {
         margin-bottom: 3.5rem;
@@ -158,6 +163,10 @@ button:active {
         width: 25%;
         font-size: 0.9rem;
     }
+  footer {
+    position: static;
+    margin-top: 2rem;
+  }
 }
 
 @media (min-width:360px) and (max-width:760px) {
@@ -169,7 +178,7 @@ button:active {
 
     input {
         width: 90%;
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     select {
@@ -190,6 +199,10 @@ button:active {
     button {
         width: 25%;
     }
+    footer {
+    position: static;
+    margin-top: 2rem;
+  }
 }
 
 @media (min-width:761px) and (max-width:1024px) {
