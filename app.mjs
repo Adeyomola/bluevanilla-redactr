@@ -23,7 +23,7 @@ function startApp() {
     //   converting the text array into a newArray where the input words are redacted
     const newArray = textArray.map((word) => {
       let inputArray = input.value.split(" "); //converting the words to be redacted into an array
-      let regex = /[,?""'':;!\[\]\.\(\)\{\}]/g; // regular expression for punctuation marks
+      let regex = /[,?""'':;!`|\/\\\[\]\.\(\)\{\}]/g; // regular expression for punctuation marks
 
       inputArray.forEach((userInput) => {
         if (userInput.toLowerCase() == word.toLowerCase().replace(regex, "")) {
