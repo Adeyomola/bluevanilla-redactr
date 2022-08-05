@@ -23,12 +23,24 @@ function startApp() {
     //   converting the text array into a newArray where the input words are redacted
     const newArray = textArray.map((word) => {
       let inputArray = input.value.split(" "); //converting the words to be redacted into an array
-      let regex = /[,?""'':;!`|\/\\\[\]\.\(\)\{\}]/g; // regular expression for punctuation marks
+      let regex = /(\W|\s)/g; // regular expression for punctuation marks
 
       inputArray.forEach((userInput) => {
         if (userInput.toLowerCase() == word.toLowerCase().replace(regex, "")) {
           count++;
-          word = scrambler.value.repeat(userInput.length);
+          word = scrambler.value.repeat(userInput.length) +
+            word.substr(userInput.length);
+          // substring method ensures the punctuations after the redacted word appear in the redacted text
+        }
+        else if (
+          userInput.toLowerCase() ==
+          word.toLowerCase().substr(0, userInput.length).replace(regex, "")
+        ) {
+          count++;
+          word =
+            scrambler.value.repeat(userInput.length) +
+            word.substr(userInput.length);
+          // substring method ensures the punctuations and word after the redacted word appear in the redacted text
         }
       });
       return word;
