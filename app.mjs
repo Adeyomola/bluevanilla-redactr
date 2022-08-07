@@ -15,6 +15,7 @@ function startApp() {
   button.addEventListener("click", () => {
     if (text.value == "") return; // returns the function if there is no user input
     let start = performance.now() / 1000; //execution time start (divided by 1000 to convert milliseconds to seconds)
+    text.value = text.value.replace(/\n/g, " \n"); // this ensures line-breaking spaces do not join two words together
     let textArray = text.value.split(" "); //An array of user input text
     //   counters for number of words matched and number of characters scrambled, respectively
     let count = 0;
@@ -23,24 +24,19 @@ function startApp() {
     //   converting the text array into a newArray where the input words are redacted
     const newArray = textArray.map((word) => {
       let inputArray = input.value.split(" "); //converting the words to be redacted into an array
-      let regex = /(\W|\s)/g; // regular expression for punctuation marks
+      let regex = /[\W\s\d]/g; // regular expression for punctuation marks
 
       inputArray.forEach((userInput) => {
-        if (userInput.toLowerCase() == word.toLowerCase().replace(regex, "")) {
-          count++;
-          word = scrambler.value.repeat(userInput.length) +
-            word.substr(userInput.length);
-          // substring method ensures the punctuations after the redacted word appear in the redacted text
-        }
-        else if (
-          userInput.toLowerCase() ==
-          word.toLowerCase().substr(0, userInput.length).replace(regex, "")
+        let userInputRegex = new RegExp(userInput, "gi");
+        if (
+          userInput.toLowerCase().replace(regex, "") ==
+          word.toLowerCase().replace(regex, "")
         ) {
           count++;
-          word =
-            scrambler.value.repeat(userInput.length) +
-            word.substr(userInput.length);
-          // substring method ensures the punctuations and word after the redacted word appear in the redacted text
+          word = word.replace(
+            userInputRegex,
+            scrambler.value.repeat(userInput.length)
+          );
         }
       });
       return word;
